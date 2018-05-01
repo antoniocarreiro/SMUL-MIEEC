@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 import Slider from './Slider';
 import {Howl} from 'howler';
+import Rodal from 'rodal';
+import 'rodal/lib/rodal.css';
+
 
 class App extends Component {
   constructor() {
@@ -25,7 +28,8 @@ class App extends Component {
         }
       ],
 
-      toggle: true
+      toggle: true,
+      submitWindow: false
     }
 
     this.userSounds = [
@@ -83,6 +87,43 @@ class App extends Component {
       this.setState(state);
   }
 
+  hide() {
+      this.setState({ submitWindow: false });
+  }
+
+  handleSubmit(title, value)
+  {
+
+    this.userSounds.forEach((track, index) => {
+      track.sound.stop();
+    })
+
+    this.originalSounds.forEach(track => {
+      track.sound.stop();
+    })
+
+    this.setState({ submitWindow: true });
+  }
+
+  handleRestart(title, value)
+  {
+    this.setState(prevState => 
+    ({
+      sliders: prevState.sliders.map(slider => ({title: slider.title, volume: Math.random()})),
+      toggle: true
+    }));
+
+    this.userSounds.forEach((track, index) => {
+      track.sound.seek(0);
+      track.sound.volume(this.state.sliders[index].volume);
+    })
+
+    this.originalSounds.forEach(track => {
+      track.sound.seek(0);
+      track.sound.volume(0);
+    })
+  }
+
   handleToggle(event)
   {
     this.setState({toggle: event.target.checked});
@@ -100,7 +141,6 @@ class App extends Component {
 
     else {
       this.userSounds.forEach((track, index) => {
-        console.log(this.state.sliders[index].volume)
         track.sound.volume(this.state.sliders[index].volume);
       })
 
@@ -119,11 +159,23 @@ class App extends Component {
     });
     return (
       <div className="MixingDesk">
+
         {sliders}
         <label className="switch">
-          <input type="checkbox" defaultChecked={this.state.toggle} onChange={this.handleToggle.bind(this)}></input>
+          <input type="checkbox" checked={this.state.toggle} onChange={this.handleToggle.bind(this)}></input>
           <span className="slider"></span>
         </label>
+
+        <button type="button" onClick={this.handleSubmit.bind(this)}>Submit</button>
+
+        <button type="button" onClick={this.handleRestart.bind(this)}>Restart</button>
+
+        <Rodal visible={this.state.submitWindow} onClose={this.hide.bind(this)}>
+          <div>
+            {this.calculateScore}
+          </div>
+        </Rodal>
+
       </div>
     );
   }
@@ -133,7 +185,6 @@ class App extends Component {
     this.userSounds.forEach((track, index) => {
       track.sound.volume(this.state.sliders[index].volume);
       track.sound.play();
-      console.log(track)
     })
 
     this.originalSounds.forEach(track => {
