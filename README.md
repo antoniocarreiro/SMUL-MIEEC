@@ -7,6 +7,6 @@ A fazer:
 - [X] Botão restart
 - [X] Botão Toggle
 - [X] Mudar de música
-- [ ] Fazer ambiente website
+- [ ] Fazer ambiente website ##IN PROGRESS
 - [X] Fazer video
-- [ ] Fazer estilização da App
+- [ ] Fazer estilização da App ##IN PROGRESS
