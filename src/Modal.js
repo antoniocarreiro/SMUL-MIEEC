@@ -33,11 +33,8 @@ class Modal extends Component {
     }
 
     return (
-        <div className="scoreModal">
-            <h2>Score: {this.props.score.toFixed(2)}</h2>
-            <img className="scoreIcon" src="/star.svg" alt="Grammy Statuette"/>
-            <h5>Congratulations, see you at the Grammys!</h5>
-        </div>
+      <div>
+      </div>
     );
   }
 }
