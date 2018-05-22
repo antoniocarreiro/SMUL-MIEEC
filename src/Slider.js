@@ -17,6 +17,7 @@ class Slider extends Component {
           step="0.01"
           onChange={this.handleChange.bind(this)}
         />
+        <span className="slider-title">{this.props.data.title}</span>
       </div>
     );
   }

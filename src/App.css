@@ -22,30 +22,6 @@
   padding: 24px 300px;
 }
 
-button {
-	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-  max-width: 180px;
-  width: 264px;
-	text-decoration: none;
-	border-radius: 4px;
-	padding: 20px 30px;
-  color: rgba(0, 0, 0, 0.6);
-  box-shadow: rgba(247, 91, 91, 0.4) 0 0px 0px 2px inset;
-  border: none;
-  padding: 24px;
-  background-color: white;
-  outline: none;
-}
-
-button:hover {
-	color: rgba(255, 255, 255, 0.85);
-	box-shadow: rgba(247, 91, 91, 0.7) 0 0px 0px 40px inset;
-}
-
 .volbox {
   margin:24px;
   height: 511px;
@@ -53,6 +29,18 @@ button:hover {
   background-image: url(/mixer.png);
   transform: scale(0.7);
   position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.volbox .slider-title {
+  font-family: 'Reenie Beanie', cursive;
+  color: rgb(255, 255, 255);
+  font-size: 4rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  bottom: -50px;
+  position: absolute;
 }
 
 .switch {
@@ -153,4 +141,142 @@ input[type=range]::-moz-focus-inner {
   border: 0;
 }
 
+#video {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  width: 1139px;
+  object-fit: cover;
+  z-index: -1;
+}
 
+.authors {
+  justify-content: space-evenly!important;
+}
+
+.author {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.author h3 {
+  color: white;
+}
+
+.author p {
+  color: white;
+}
+
+.author img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 90px;
+}
+
+.tgl {
+  display: none;
+}
+.tgl, .tgl:after, .tgl:before, .tgl *, .tgl *:after, .tgl *:before, .tgl + .tgl-btn {
+  box-sizing: border-box;
+}
+.tgl::-moz-selection, .tgl:after::-moz-selection, .tgl:before::-moz-selection, .tgl *::-moz-selection, .tgl *:after::-moz-selection, .tgl *:before::-moz-selection, .tgl + .tgl-btn::-moz-selection {
+  background: none;
+}
+.tgl::selection, .tgl:after::selection, .tgl:before::selection, .tgl *::selection, .tgl *:after::selection, .tgl *:before::selection, .tgl + .tgl-btn::selection {
+  background: none;
+}
+.tgl + .tgl-btn {
+  outline: 0;
+  display: block;
+  width: 4em;
+  height: 2em;
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.tgl + .tgl-btn:after, .tgl + .tgl-btn:before {
+  position: relative;
+  display: block;
+  content: "";
+  width: 50%;
+  height: 100%;
+}
+.tgl + .tgl-btn:after {
+  left: 0;
+}
+.tgl + .tgl-btn:before {
+  display: none;
+}
+.tgl:checked + .tgl-btn:after {
+  left: 50%;
+}
+
+.tgl-skewed + .tgl-btn {
+  overflow: hidden;
+  -webkit-transform: skew(-10deg);
+          transform: skew(-10deg);
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  transition: all 0.2s ease;
+  font-family: sans-serif;
+  background: #888;
+}
+.tgl-skewed + .tgl-btn:after, .tgl-skewed + .tgl-btn:before {
+  -webkit-transform: skew(10deg);
+          transform: skew(10deg);
+  display: inline-block;
+  transition: all 0.2s ease;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  line-height: 2em;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+.tgl-skewed + .tgl-btn:after {
+  left: 100%;
+  content: attr(data-tg-on);
+}
+.tgl-skewed + .tgl-btn:before {
+  left: 0;
+  content: attr(data-tg-off);
+}
+.tgl-skewed + .tgl-btn:active {
+  background: #888;
+}
+.tgl-skewed + .tgl-btn:active:before {
+  left: -10%;
+}
+.tgl-skewed:checked + .tgl-btn {
+  background: #86d993;
+}
+.tgl-skewed:checked + .tgl-btn:before {
+  left: -100%;
+}
+.tgl-skewed:checked + .tgl-btn:after {
+  left: 0;
+}
+.tgl-skewed:checked + .tgl-btn:active:after {
+  left: 10%;
+}
+
+.scoreModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.scoreModal .scoreIcon {
+  width: 60px;
+  height: 60px;
+}

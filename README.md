@@ -1,12 +1,16 @@
 A fazer:
 
 - [ ] Exportar MIDI para áudio. ##IN PROGRESS
+- [ ] Mudar textos, icons(linearicons) imagens
 - [X] Meter 8 faixas a tocar 4 muted.
 - [X] Gerar valores solução/iniciais
-- [ ] Botão submit ##IN PROGRESS
+- [X] Botão submit
 - [X] Botão restart
 - [X] Botão Toggle
 - [X] Mudar de música
-- [ ] Fazer ambiente website ##IN PROGRESS
+- [X] Fazer ambiente website
 - [X] Fazer video
-- [ ] Fazer estilização da App ##IN PROGRESS
+- [X] Fazer estilização da App
+- [X] Imagens fade
+- [X] Estilização do toggle
+- [X] Play on scroll

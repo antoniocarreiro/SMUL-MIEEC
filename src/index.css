@@ -1,13 +1,3 @@
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: sans-serif;
-}
-
 #root {
   width: 100%;
   height: 100%;

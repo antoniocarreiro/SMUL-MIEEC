@@ -2,7 +2,9 @@ import { Howl } from 'howler';
 import React, { Component } from 'react';
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
+import * as ScrollMagic from 'scrollmagic';
 import Slider from './Slider';
+import Modal from './Modal';
 import './App.css';
 
 class App extends Component {
@@ -33,6 +35,7 @@ class App extends Component {
 
       toggle: true,
       submitWindow: false,
+      score: 0,
     };
 
     this.userSounds = [
@@ -74,6 +77,8 @@ class App extends Component {
         volume: 0.9,
       },
     ];
+
+    this.controller = new ScrollMagic.Controller();
   }
 
   handleVolumeChange(title, value) {
@@ -90,19 +95,22 @@ class App extends Component {
     this.setState({ submitWindow: false });
   }
 
-  handleSubmit(title, value) {
-    this.userSounds.forEach((track) => {
+  handleSubmit() {
+    let score = 0;
+
+    this.userSounds.forEach((track, index) => {
       track.sound.stop();
+      score += Math.abs(track.sound._volume - this.originalSounds[index].volume);
     });
 
     this.originalSounds.forEach((track) => {
       track.sound.stop();
     });
 
-    this.setState({ submitWindow: true });
+    this.setState({ submitWindow: true, score: (2.95 - score) / 2.95 });
   }
 
-  handleRestart(title, value) {
+  handleRestart() {
     this.setState(prevState => ({
       sliders: prevState.sliders.map(slider => ({
         title: slider.title,
@@ -114,11 +122,13 @@ class App extends Component {
     this.userSounds.forEach((track, index) => {
       track.sound.seek(0);
       track.sound.volume(this.state.sliders[index].volume);
+      track.sound.play();
     });
 
     this.originalSounds.forEach((track) => {
       track.sound.seek(0);
       track.sound.volume(0);
+      track.sound.play();
     });
   }
 
@@ -159,41 +169,49 @@ class App extends Component {
         </div>
 
         <div className="controllsContainer">
-          <button type="button" onClick={this.handleSubmit.bind(this)}>
-            Submit
+          <button type="button" className="primary-btn hover d-inline-flex align-items-center" onClick={this.handleSubmit.bind(this)}>
+            <span>Submit</span>
           </button>
 
-          <label className="switch">
-            <input
-              type="checkbox"
-              checked={this.state.toggle}
-              onChange={this.handleToggle.bind(this)}
-            />
-            <span className="slider" />
-          </label>
+          <input id="cb3" className="tgl tgl-skewed" type="checkbox"
+            checked={this.state.toggle}
+            onChange={this.handleToggle.bind(this)}/>
+          <label className="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="cb3"/>
 
-          <button type="button" onClick={this.handleRestart.bind(this)}>
-            Restart
+          <button type="button" className="primary-btn hover d-inline-flex align-items-center" onClick={this.handleRestart.bind(this)}>
+            <span>Restart</span>
           </button>
         </div>
 
         <Rodal visible={this.state.submitWindow} onClose={this.hide.bind(this)}>
-          <div>{this.calculateScore}</div>
+          <Modal score={this.state.score}/>
         </Rodal>
       </div>
     );
   }
 
+  playSounds() {
+    this.userSounds.forEach((track) => {
+      if (!track.sound.playing()) { track.sound.play(); }
+    });
+
+    this.originalSounds.forEach((track) => {
+      if (!track.sound.playing()) { track.sound.play(); }
+    });
+  }
+
   componentDidMount() {
     this.userSounds.forEach((track, index) => {
       track.sound.volume(this.state.sliders[index].volume);
-      track.sound.play();
     });
 
     this.originalSounds.forEach((track) => {
       track.sound.volume(0);
-      track.sound.play();
     });
+
+    new ScrollMagic.Scene({ triggerElement: '#root' })
+      .on('start', this.playSounds.bind(this))
+      .addTo(this.controller);
   }
 }
 
